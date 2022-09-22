@@ -28,7 +28,7 @@ const Calender = ({ holidayData }) => {
     createDaysFunction(monthString, calenderYear)
   );
 
-  const anotherfukingtest = () => {
+  const createCalender = () => {
     holidayData.map((holiday) => {
       const {
         title,
@@ -119,7 +119,7 @@ const Calender = ({ holidayData }) => {
   };
 console.log(testChange);
   const handleCalenderColoring = () => {
-    anotherfukingtest();
+    createCalender();
     holidayData.forEach((holiday) => {
       const {
         title,
