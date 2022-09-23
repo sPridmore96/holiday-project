@@ -29,10 +29,10 @@ const Calender = ({ holidayData }) => {
   );
 
   const createCalender = () => {
-    const EachDayJSX = holidayData.map((holiday) => {
+     holidayData.map((holiday) => {
       const { dayStart, monthStart, dayFinish, monthFinish } = holiday;
 
-      return allMonthsWithDaysArr.map((monthWithDays, monthlyIndexInt) => {
+      const EachDayJSX = allMonthsWithDaysArr.map((monthWithDays, monthlyIndexInt) => {
         if (
           monthStart - 1 === monthlyIndexInt &&
           monthStart - 1 === monthFinish - 1
@@ -95,34 +95,13 @@ const Calender = ({ holidayData }) => {
           );
         });
       });
+      setDaysForEachMonth(EachDayJSX)
     });
-    // for (let i = 0; i < EachDayJSX.length -1; i++) {
-
-    //   const testcopy = [...EachDayJSX[i]]
-    //   const newarr = [...new Set([...testcopy,...EachDayJSX[i +1]])]
-    //   console.log(newarr);
-    // }
-
-// let testFinalArr = EachDayJSX[0].concat(EachDayJSX[1]);
-// console.log(testFinalArr);
-// testFinalArr = testFinalArr.filter((item) => {
-//   return (item.filter((days, index) => {
-//     return (item.indexOf(days.props.className) === index)
-//   }))
-// })
-// console.log(testFinalArr);
-// testFinalArr.indexOf(item) === index
-
-let testFinalArr = EachDayJSX[1].filter(x => EachDayJSX[0].indexOf(x) === -1);
-console.log(testFinalArr);
-
-
-
-    setDaysForEachMonth(testFinalArr);
   };
 
   const handleMonthArrJSX = () => {
     createCalender();
+
     const monthJSX = months.map((eachMonth, index) => {
       return <p key={index}>{eachMonth}</p>;
     });
