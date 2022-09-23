@@ -6,8 +6,10 @@ const Home = ({holidayData}) => {
     
 
   return (
-    <div>
+    <div className='home'>
+      <h1 className='home__title'>Your Yearly Holiday Calender</h1>
         <Calender holidayData={holidayData}/>
+        
     </div>
   )
 }
