@@ -99,6 +99,65 @@ const Calender = ({ holidayData }) => {
     });
   };
 
+      // for (let i = 0; i < EachDayJSX.length - 1; i++) {
+    //   for (let j = 0; j < EachDayJSX[i].length; j++) {
+    //     for (let k = 0; k < EachDayJSX[i][j].length; k++) {
+    //         const newarr = [...new Set([...EachDayJSX[i][j][k], ...EachDayJSX[i + 1][j][k]])];
+    //         console.log(newarr);
+    //     }
+    //   }
+    // }
+
+    
+
+    // let testFinalArr = EachDayJSX[0].concat(EachDayJSX[1]);
+    // const test = testFinalArr.map(arr => {
+    //   return arr.map(arr1 => {
+    //     console.log(arr1 );
+        // return [...new Set(arr1)]
+    //   })
+    // })
+    // console.log(testFinalArr);
+    // testFinalArr = testFinalArr.filter((item) => {
+    //   return (item.filter((days, index) => {
+    //     return (item.indexOf(days.props.className) === index)
+    //   }))
+    // })
+    // console.log(testFinalArr);
+    // testFinalArr.indexOf(item) === index
+
+    // let testFinalArr = EachDayJSX[0].filter(x => EachDayJSX[1].indexOf(x) === -1);
+    
+
+    //     const wrapper = () => {
+    //       let test = null;
+    //       let test2 = null;
+    //       let arr3 = [];
+    //       let arr4 = [];
+    //       for (let i = 0; i < EachDayJSX.length; i++) {
+    //         for (let x = 0; x < EachDayJSX[i].length; x++) {
+    //           if (arr4.indexOf(EachDayJSX[i][x] == -1)) {
+    //             arr4.push(EachDayJSX[i][x]);
+    //           }
+    //         }
+    //         arr3.push(arr4);
+    //       }
+    //       for (let j = 0; j < EachDayJSX.length; j++) {
+    //         for (let k = 0; k < EachDayJSX[1].length; k++) {
+    //           if (arr4.indexOf[EachDayJSX[j][k] == -1]) {
+    //             arr4.push(EachDayJSX[j][k]);
+    //           }
+    //         }
+    //         if (arr3[j] == -1) {
+    //           arr3.push(arr4)
+    //         }
+    //       }
+    // console.log(arr4);
+    //       // console.log(testFinalArr);
+    //       setDaysForEachMonth(arr4);
+    //     };
+    //     wrapper();
+
   const handleMonthArrJSX = () => {
     createCalender();
 
