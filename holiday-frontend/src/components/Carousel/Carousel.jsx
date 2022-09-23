@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
 import "./Carousel.scss"
 
-const Carousel = ({givenArr, titleToSet, title, startPosition}) => {
-    const [counter, setCounter] = useState(startPosition)
+const Carousel = ({givenArr, titleToSet, title, counter, setCounter}) => {
+
 
 
     const handleLeftArrow = () => {
