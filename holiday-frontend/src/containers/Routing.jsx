@@ -74,6 +74,7 @@ const Routing = () => {
             path="/"
             element={
               <Home
+              holidayData={holidayData}
                 allMonthsWithDaysArr={allMonthsWithDaysArr}
                 holidayDataArr={holidayDataArr}
                 dataLoaded={dataLoaded}
@@ -83,7 +84,7 @@ const Routing = () => {
             }
           />
         )}
-        <Route path="/holiday" />
+        <Route path="/holiday"/>
       </Routes>
     </Router>
   );

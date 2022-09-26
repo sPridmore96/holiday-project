@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './Calender.scss';
-import createDaysFunction from '../../assets/daysOfTheYear';
 import Carousel from '../Carousel/Carousel';
+import HolidayOverlay from '../HolidayOverlay/HolidayOverlay';
 
 const Calender = ({
+  holidayData,
   holidayDataArr,
   fullYearArr,
   dataLoaded,
@@ -14,6 +15,9 @@ const Calender = ({
   const [monthlyTitles, setMonthlyTitles] = useState();
   const [counter, setCounter] = useState(currentDate.getMonth());
   const [daysForEachMonth, setDaysForEachMonth] = useState();
+  const [clickedDateArr, setClickedDateArr] = useState([]);
+  const [clickedHolidayInfo, setClickedHolidayInfo] = useState();
+  const [overlayActive, setOverlayActive] = useState(false);
   const months = [
     'January',
     'February',
@@ -29,6 +33,36 @@ const Calender = ({
     'December',
   ];
 
+  const handleHolidayClicked = (event) => {
+    if(event.target.textContent === "X") {
+      setOverlayActive((overlayActive) => !overlayActive);
+    } else {
+    let clickedDay = parseInt(event.target.textContent);
+    let clickedMonthInt =
+      months.indexOf(
+        event.target.parentElement.parentElement.parentElement.parentElement
+          .children[1].innerText
+      ) + 1;
+    if (event.target.className === 'calender__each-day--bookedDay') {
+      holidayData.forEach((holiday) => {
+        if (clickedMonthInt === holiday.monthStart) {
+          if (clickedDay >= holiday.dayStart) {
+            setClickedHolidayInfo(holiday);
+            setOverlayActive((overlayActive) => !overlayActive);
+          }
+        } else {
+          if (clickedMonthInt === holiday.monthFinish) {
+            if (clickedDay <= holiday.dayFinish) {
+              setClickedHolidayInfo(holiday);
+              setOverlayActive((overlayActive) => !overlayActive);
+            }
+          }
+        }
+      });
+    } else {
+    }
+  }
+  };
   const createCalender = () => {
     let i = 0;
     const calenderArr = fullYearArr.map((eachMonth, monthIndex) => {
@@ -39,7 +73,11 @@ const Calender = ({
             if (eachDay === holidayDataArr[i][0]) {
               i++;
               EachDayJSX = (
-                <span key={index} className="calender__each-day--bookedDay">
+                <span
+                  onClick={handleHolidayClicked}
+                  key={index}
+                  className="calender__each-day--bookedDay"
+                >
                   {eachDay}
                 </span>
               );
@@ -47,7 +85,11 @@ const Calender = ({
               return EachDayJSX;
             } else {
               EachDayJSX = (
-                <span key={index} className="calender__each-day">
+                <span
+                  onClick={handleHolidayClicked}
+                  key={index}
+                  className="calender__each-day"
+                >
                   {eachDay}
                 </span>
               );
@@ -55,7 +97,11 @@ const Calender = ({
             }
           } else {
             EachDayJSX = (
-              <span key={index} className="calender__each-day">
+              <span
+                onClick={handleHolidayClicked}
+                key={index}
+                className="calender__each-day"
+              >
                 {eachDay}
               </span>
             );
@@ -63,7 +109,11 @@ const Calender = ({
           }
         } else {
           EachDayJSX = (
-            <span key={index} className="calender__each-day">
+            <span
+              onClick={handleHolidayClicked}
+              key={index}
+              className="calender__each-day"
+            >
               {eachDay}
             </span>
           );
@@ -100,6 +150,14 @@ const Calender = ({
           title={calenderYear}
           titleToSet={setCalenderYear}
           givenArr={daysForEachMonth}
+        />
+      )}
+      {clickedHolidayInfo && (
+        <HolidayOverlay
+        handleHolidayClicked={handleHolidayClicked}
+          overlayActive={overlayActive}
+          clickedHolidayInfo={clickedHolidayInfo}
+          months={months}
         />
       )}
     </div>

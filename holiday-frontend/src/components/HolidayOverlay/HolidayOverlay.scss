@@ -1,0 +1,36 @@
+@use "../../assets/Scss/variables" as *;
+
+.overlay{
+    position: absolute;
+    top: 13rem;
+    padding: 1rem;
+    width: 18rem;
+    height: 25rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 1rem;
+    background-color: $color-white;
+    &--hidden{
+        display: none;
+    }
+    &__close{
+        width: 2rem;
+        height: 2rem;
+        position: relative;
+        left: 14rem;
+        background-color: $color-darkRed;
+        border-radius: 2rem;
+        text-align: center;
+        padding-top: .3rem;
+        font-weight: 700;
+        border: none;
+    }
+    &__title{
+        margin: 0 0 1rem 0;
+    }
+    &__dates{
+        margin: 0.5rem;
+    }
+    &__info{
+        margin: 4rem auto;
+    }
+}
