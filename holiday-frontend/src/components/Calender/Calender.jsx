@@ -3,12 +3,12 @@ import './Calender.scss';
 import createDaysFunction from '../../assets/daysOfTheYear';
 import Carousel from '../Carousel/Carousel';
 
-const Calender = ({ holidayData }) => {
+const Calender = ({ holidayDataArr, fullYearArr, dataLoaded }) => {
   const currentDate = new Date();
-  const [calenderYear, setCalenderYear] = useState(currentDate.getFullYear());
   const [monthlyTitles, setMonthlyTitles] = useState();
   const [counter, setCounter] = useState(currentDate.getMonth());
   const [daysForEachMonth, setDaysForEachMonth] = useState();
+  const [calenderYear, setCalenderYear] = useState(currentDate.getFullYear());
   const months = [
     'January',
     'February',
@@ -24,151 +24,65 @@ const Calender = ({ holidayData }) => {
     'December',
   ];
 
-  const allMonthsWithDaysArr = months.map((monthString) =>
-    createDaysFunction(monthString, calenderYear)
-  );
-
   const createCalender = () => {
-     holidayData.map((holiday) => {
-      const { dayStart, monthStart, dayFinish, monthFinish } = holiday;
-
-      const EachDayJSX = allMonthsWithDaysArr.map((monthWithDays, monthlyIndexInt) => {
-        if (
-          monthStart - 1 === monthlyIndexInt &&
-          monthStart - 1 === monthFinish - 1
-        ) {
-          return monthWithDays.map((day, index) => {
-            if (day >= dayStart && day <= dayFinish) {
-              return (
+    let i = 0;
+    const calenderArr = fullYearArr.map((eachMonth, monthIndex) => {
+      return eachMonth.map((eachDay, index) => {
+        let EachDayJSX;
+        console.log(i);
+        console.log(holidayDataArr.length -1);
+        if (i <= holidayDataArr.length -1) {
+          if (holidayDataArr[i][1] === monthIndex + 1) {
+            if (eachDay === holidayDataArr[i][0]) {
+              i++;
+              console.log(`index of ${i}`);
+              EachDayJSX = (
                 <span key={index} className="calender__each-day--bookedDay">
-                  {day}
+                  {eachDay}
                 </span>
               );
+
+              return EachDayJSX;
+            } else {
+              EachDayJSX = (
+                <span key={index} className="calender__each-day">
+                  {eachDay}
+                </span>
+              );
+              return EachDayJSX;
             }
-            return (
+          } else {
+            EachDayJSX = (
               <span key={index} className="calender__each-day">
-                {day}
+                {eachDay}
               </span>
             );
-          });
-        } else if (monthStart - 1 !== monthFinish - 1) {
-          if (monthStart - 1 === monthlyIndexInt) {
-            return monthWithDays.map((day, index) => {
-              if (day >= dayStart) {
-                return (
-                  <span key={index} className="calender__each-day--bookedDay">
-                    {day}
-                  </span>
-                );
-              } else {
-                return (
-                  <span key={index} className="calender__each-day">
-                    {day}
-                  </span>
-                );
-              }
-            });
+            return EachDayJSX;
           }
-          if (monthFinish - 1 === monthlyIndexInt) {
-            return monthWithDays.map((day, index) => {
-              if (day <= dayFinish) {
-                return (
-                  <span key={index} className="calender__each-day--bookedDay">
-                    {day}
-                  </span>
-                );
-              } else {
-                return (
-                  <span key={index} className="calender__each-day">
-                    {day}
-                  </span>
-                );
-              }
-            });
-          }
-        }
-        return monthWithDays.map((day, index) => {
-          return (
+        } else {
+          EachDayJSX = (
             <span key={index} className="calender__each-day">
-              {day}
+              {eachDay}
             </span>
           );
-        });
+          return EachDayJSX;
+        }
       });
-      setDaysForEachMonth(EachDayJSX)
     });
+    setDaysForEachMonth(calenderArr);
   };
 
-      // for (let i = 0; i < EachDayJSX.length - 1; i++) {
-    //   for (let j = 0; j < EachDayJSX[i].length; j++) {
-    //     for (let k = 0; k < EachDayJSX[i][j].length; k++) {
-    //         const newarr = [...new Set([...EachDayJSX[i][j][k], ...EachDayJSX[i + 1][j][k]])];
-    //         console.log(newarr);
-    //     }
-    //   }
-    // }
-
-    
-
-    // let testFinalArr = EachDayJSX[0].concat(EachDayJSX[1]);
-    // const test = testFinalArr.map(arr => {
-    //   return arr.map(arr1 => {
-    //     console.log(arr1 );
-        // return [...new Set(arr1)]
-    //   })
-    // })
-    // console.log(testFinalArr);
-    // testFinalArr = testFinalArr.filter((item) => {
-    //   return (item.filter((days, index) => {
-    //     return (item.indexOf(days.props.className) === index)
-    //   }))
-    // })
-    // console.log(testFinalArr);
-    // testFinalArr.indexOf(item) === index
-
-    // let testFinalArr = EachDayJSX[0].filter(x => EachDayJSX[1].indexOf(x) === -1);
-    
-
-    //     const wrapper = () => {
-    //       let test = null;
-    //       let test2 = null;
-    //       let arr3 = [];
-    //       let arr4 = [];
-    //       for (let i = 0; i < EachDayJSX.length; i++) {
-    //         for (let x = 0; x < EachDayJSX[i].length; x++) {
-    //           if (arr4.indexOf(EachDayJSX[i][x] == -1)) {
-    //             arr4.push(EachDayJSX[i][x]);
-    //           }
-    //         }
-    //         arr3.push(arr4);
-    //       }
-    //       for (let j = 0; j < EachDayJSX.length; j++) {
-    //         for (let k = 0; k < EachDayJSX[1].length; k++) {
-    //           if (arr4.indexOf[EachDayJSX[j][k] == -1]) {
-    //             arr4.push(EachDayJSX[j][k]);
-    //           }
-    //         }
-    //         if (arr3[j] == -1) {
-    //           arr3.push(arr4)
-    //         }
-    //       }
-    // console.log(arr4);
-    //       // console.log(testFinalArr);
-    //       setDaysForEachMonth(arr4);
-    //     };
-    //     wrapper();
-
   const handleMonthArrJSX = () => {
-    createCalender();
-
     const monthJSX = months.map((eachMonth, index) => {
       return <p key={index}>{eachMonth}</p>;
     });
     setMonthlyTitles(monthJSX);
   };
+
   useEffect(() => {
+    createCalender();
     handleMonthArrJSX();
-  }, [holidayData]);
+  }, [dataLoaded]);
 
   return (
     <div className="calender">
