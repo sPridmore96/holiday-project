@@ -7,10 +7,6 @@ const HolidayOverlay = ({clickedHolidayInfo, overlayActive, handleHolidayClicked
 
 const {dayStart, dayFinish, monthStart,monthFinish, title, holidayInfo} = clickedHolidayInfo;
 
-    const deleteHoliday = () => {
-
-    }
-
   return (
     <div className={overlayActive ? "overlay" : "overlay--hidden"}>
         <button onClick={handleHolidayClicked} className='overlay__close'>X</button>

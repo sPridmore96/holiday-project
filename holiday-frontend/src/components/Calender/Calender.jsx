@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Calender.scss';
 import Carousel from '../Carousel/Carousel';
 import HolidayOverlay from '../HolidayOverlay/HolidayOverlay';
+import BookingOverlay from '../../containers/BookingOverlay/BookingOverlay';
 
 const Calender = ({
   holidayData,
@@ -18,6 +19,7 @@ const Calender = ({
   const [clickedDateArr, setClickedDateArr] = useState([]);
   const [clickedHolidayInfo, setClickedHolidayInfo] = useState();
   const [overlayActive, setOverlayActive] = useState(false);
+  const [BookingOverlayActive, setBookingOverlayActive] = useState(false);
   const months = [
     'January',
     'February',
@@ -34,35 +36,41 @@ const Calender = ({
   ];
 
   const handleHolidayClicked = (event) => {
-    if(event.target.textContent === "X") {
-      setOverlayActive((overlayActive) => !overlayActive);
+    if (event.target.textContent === 'X') {
+      if (event.target.className === 'overlay__close') {
+        setOverlayActive((overlayActive) => !overlayActive);
+      } else {
+        setBookingOverlayActive((BookingOverlay) => !BookingOverlay);
+      }
     } else {
-    let clickedDay = parseInt(event.target.textContent);
-    let clickedMonthInt =
-      months.indexOf(
-        event.target.parentElement.parentElement.parentElement.parentElement
-          .children[1].innerText
-      ) + 1;
-    if (event.target.className === 'calender__each-day--bookedDay') {
-      holidayData.forEach((holiday) => {
-        if (clickedMonthInt === holiday.monthStart) {
-          if (clickedDay >= holiday.dayStart) {
-            setClickedHolidayInfo(holiday);
-            setOverlayActive((overlayActive) => !overlayActive);
-          }
-        } else {
-          if (clickedMonthInt === holiday.monthFinish) {
-            if (clickedDay <= holiday.dayFinish) {
+      let clickedDay = parseInt(event.target.textContent);
+      let clickedMonthInt =
+        months.indexOf(
+          event.target.parentElement.parentElement.parentElement.parentElement
+            .children[1].innerText
+        ) + 1;
+      if (event.target.className === 'calender__each-day--bookedDay') {
+        holidayData.forEach((holiday) => {
+          if (clickedMonthInt === holiday.monthStart) {
+            if (clickedDay >= holiday.dayStart) {
               setClickedHolidayInfo(holiday);
               setOverlayActive((overlayActive) => !overlayActive);
             }
+          } else {
+            if (clickedMonthInt === holiday.monthFinish) {
+              if (clickedDay <= holiday.dayFinish) {
+                setClickedHolidayInfo(holiday);
+                setOverlayActive((overlayActive) => !overlayActive);
+              }
+            }
           }
-        }
-      });
-    } else {
+        });
+      } else {
+        setBookingOverlayActive((BookingOverlay) => !BookingOverlay);
+      }
     }
-  }
   };
+
   const createCalender = () => {
     let i = 0;
     const calenderArr = fullYearArr.map((eachMonth, monthIndex) => {
@@ -123,7 +131,6 @@ const Calender = ({
     });
     setDaysForEachMonth(calenderArr);
   };
-
   const handleMonthArrJSX = () => {
     const monthJSX = months.map((eachMonth, index) => {
       return <p key={index}>{eachMonth}</p>;
@@ -154,12 +161,18 @@ const Calender = ({
       )}
       {clickedHolidayInfo && (
         <HolidayOverlay
-        handleHolidayClicked={handleHolidayClicked}
+          handleHolidayClicked={handleHolidayClicked}
           overlayActive={overlayActive}
           clickedHolidayInfo={clickedHolidayInfo}
           months={months}
         />
       )}
+      <BookingOverlay
+        handleHolidayClicked={handleHolidayClicked}
+        BookingOverlayActive={BookingOverlayActive}
+        months={months}
+        daysForEachMonth={daysForEachMonth}
+      />
     </div>
   );
 };

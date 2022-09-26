@@ -84,7 +84,7 @@ const Routing = () => {
             }
           />
         )}
-        <Route path="/holiday"/>
+        <Route path="/booking"/>
       </Routes>
     </Router>
   );

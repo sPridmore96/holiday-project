@@ -1,0 +1,16 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    &__dropdown-containers{
+        margin-top: 1.2rem;
+    }
+    &__label{
+        margin-right: .2rem;
+    }
+    &__options{
+        margin: 1rem 0;
+        &--date{
+            margin-left: 1rem;
+        }
+    }
+}

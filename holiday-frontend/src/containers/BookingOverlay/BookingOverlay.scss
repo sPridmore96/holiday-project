@@ -1,0 +1,14 @@
+.booking-overlay{
+    position: absolute;
+    top: 13rem;
+    padding: 1rem;
+    width: 18rem;
+    height: 25rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 1rem;
+    background-color: white;
+    
+    &--hidden{
+        display: none;
+    }
+}
