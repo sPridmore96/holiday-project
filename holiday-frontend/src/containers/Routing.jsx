@@ -57,6 +57,13 @@ const Routing = () => {
           }
         });
       });
+      holidayDataArrCopy.sort((a, b) => {
+        if (a[1] === b[1]) {
+          return a[0] - b[0]
+        } else {
+          return a[1] - b[1]
+        }
+      })
       setHolidayDataArr(holidayDataArrCopy);
     });
   };
@@ -74,6 +81,7 @@ const Routing = () => {
             path="/"
             element={
               <Home
+              setDataLoaded={setDataLoaded}
               holidayData={holidayData}
                 allMonthsWithDaysArr={allMonthsWithDaysArr}
                 holidayDataArr={holidayDataArr}

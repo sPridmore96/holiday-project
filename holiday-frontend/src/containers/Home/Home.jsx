@@ -7,6 +7,7 @@ const Home = ({
   allMonthsWithDaysArr,
   holidayDataArr,
   dataLoaded,
+  setDataLoaded,
   calenderYear,
   setCalenderYear,
 }) => {
@@ -14,6 +15,7 @@ const Home = ({
     <div className="home">
       <h1 className="home__title">Your Yearly Holiday Calender</h1>
       <Calender
+      setDataLoaded={setDataLoaded}
       holidayData={holidayData}
         dataLoaded={dataLoaded}
         holidayDataArr={holidayDataArr}

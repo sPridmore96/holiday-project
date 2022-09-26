@@ -2,7 +2,7 @@ import React from 'react';
 import BookingForm from '../../components/BookingForm/BookingForm';
 import './BookingOverlay.scss';
 
-const BookingOverlay = ({ BookingOverlayActive, daysForEachMonth, months, handleHolidayClicked }) => {
+const BookingOverlay = ({ BookingOverlayActive, daysForEachMonth, months, handleHolidayClicked,dataLoaded, setDataLoaded }) => {
   return (
     <div
       className={
@@ -10,7 +10,7 @@ const BookingOverlay = ({ BookingOverlayActive, daysForEachMonth, months, handle
       }
     >
         <button onClick={handleHolidayClicked}>X</button>
-      <BookingForm daysForEachMonth={daysForEachMonth} months={months} />
+      <BookingForm setDataLoaded={setDataLoaded} dataLoaded={dataLoaded} daysForEachMonth={daysForEachMonth} months={months} />
     </div>
   );
 };

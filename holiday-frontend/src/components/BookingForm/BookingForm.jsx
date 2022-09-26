@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './BookingForm.scss';
 import Button from '../Button/Button';
 
-const BookingForm = ({ daysForEachMonth, months }) => {
+const BookingForm = ({ daysForEachMonth, months, dataLoaded, setDataLoaded }) => {
   const currentDate = new Date();
   const [selectedMonth, setSelectedMonth] = useState(1);
   const [yearsArr, setYearsArr] = useState([]);
@@ -53,7 +53,8 @@ const BookingForm = ({ daysForEachMonth, months }) => {
       headers: headersList,
     });
     let data = await response.text();
-    console.log(data);
+
+    alert(data)
   };
 
   //   console.log(daysForEachMonth[selectedMonth - 1]);

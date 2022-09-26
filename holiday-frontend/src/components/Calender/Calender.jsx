@@ -11,6 +11,7 @@ const Calender = ({
   dataLoaded,
   calenderYear,
   setCalenderYear,
+  setDataLoaded
 }) => {
   const currentDate = new Date();
   const [monthlyTitles, setMonthlyTitles] = useState();
@@ -45,22 +46,22 @@ const Calender = ({
     } else {
       let clickedDay = parseInt(event.target.textContent);
       let clickedMonthInt =
-        months.indexOf(
-          event.target.parentElement.parentElement.parentElement.parentElement
-            .children[1].innerText
+      months.indexOf(
+        event.target.parentElement.parentElement.parentElement.parentElement
+        .children[1].innerText
         ) + 1;
-      if (event.target.className === 'calender__each-day--bookedDay') {
-        holidayData.forEach((holiday) => {
-          if (clickedMonthInt === holiday.monthStart) {
-            if (clickedDay >= holiday.dayStart) {
-              setClickedHolidayInfo(holiday);
-              setOverlayActive((overlayActive) => !overlayActive);
-            }
+        if (event.target.className === 'calender__each-day--bookedDay') {
+          holidayData.forEach((holiday) => {
+            if (clickedMonthInt === holiday.monthStart) {
+              if (clickedDay >= holiday.dayStart) {
+                setClickedHolidayInfo(holiday);
+                setOverlayActive((overlayActive) => !overlayActive);
+              }
           } else {
             if (clickedMonthInt === holiday.monthFinish) {
               if (clickedDay <= holiday.dayFinish) {
-                setClickedHolidayInfo(holiday);
                 setOverlayActive((overlayActive) => !overlayActive);
+                setClickedHolidayInfo(holiday);
               }
             }
           }
@@ -70,6 +71,7 @@ const Calender = ({
       }
     }
   };
+  console.log(overlayActive);
 
   const createCalender = () => {
     let i = 0;
@@ -168,6 +170,8 @@ const Calender = ({
         />
       )}
       <BookingOverlay
+      setDataLoaded={setDataLoaded}
+      dataLoaded={dataLoaded}
         handleHolidayClicked={handleHolidayClicked}
         BookingOverlayActive={BookingOverlayActive}
         months={months}
