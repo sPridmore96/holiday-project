@@ -8,7 +8,7 @@ const Routing = () => {
   const [holidayData, setHolidayData] = useState([]);
   const [holidayDataArr, setHolidayDataArr] = useState([]);
   const [calenderYear, setCalenderYear] = useState(currentDate.getFullYear());
-  const [dataLoaded, setDataLoaded] = useState(false)
+  const [dataLoaded, setDataLoaded] = useState(false);
   const months = [
     'January',
     'February',
@@ -28,7 +28,7 @@ const Routing = () => {
     const res = await fetch(`http://localhost:8080/holidays`);
     const data = await res.json();
     setHolidayData(data);
-    setDataLoaded(true)
+    setDataLoaded(true);
   };
 
   const allMonthsWithDaysArr = months.map((monthString) =>
@@ -59,25 +59,26 @@ const Routing = () => {
       });
       setHolidayDataArr(holidayDataArrCopy);
     });
-
   };
 
   useEffect(() => {
     getHolidayInfo();
     handleHolidayData();
-  }, [dataLoaded]);
+  }, [dataLoaded, calenderYear]);
 
   return (
     <Router>
       <Routes>
-        {holidayDataArr.length !== 0 && allMonthsWithDaysArr &&(
+        {holidayDataArr.length !== 0 && allMonthsWithDaysArr && (
           <Route
             path="/"
             element={
               <Home
-              allMonthsWithDaysArr={allMonthsWithDaysArr}
+                allMonthsWithDaysArr={allMonthsWithDaysArr}
                 holidayDataArr={holidayDataArr}
                 dataLoaded={dataLoaded}
+                calenderYear={calenderYear}
+                setCalenderYear={setCalenderYear}
               />
             }
           />
