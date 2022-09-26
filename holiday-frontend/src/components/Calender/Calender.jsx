@@ -3,11 +3,12 @@ import './Calender.scss';
 import createDaysFunction from '../../assets/daysOfTheYear';
 import Carousel from '../Carousel/Carousel';
 
-const Calender = ({ holidayData }) => {
+const Calender = ({ holidayDataArr, fullYearArr, dataLoaded }) => {
   const currentDate = new Date();
+  const [monthlyTitles, setMonthlyTitles] = useState();
+  const [counter, setCounter] = useState(currentDate.getMonth());
+  const [daysForEachMonth, setDaysForEachMonth] = useState();
   const [calenderYear, setCalenderYear] = useState(currentDate.getFullYear());
-  const [counter, setCounter] = useState(currentDate.getMonth())
-  const [eachMonthsDays, setTestChange] = useState();
   const months = [
     'January',
     'February',
@@ -23,111 +24,80 @@ const Calender = ({ holidayData }) => {
     'December',
   ];
 
-  const allMonthsWithDaysArr = months.map((monthString) =>
-    createDaysFunction(monthString, calenderYear)
-  );
-
   const createCalender = () => {
-    holidayData.map((holiday) => {
-      const {
-        dayStart,
-        monthStart,
-        dayFinish,
-        monthFinish,
-      } = holiday;
-
-      const EachDayJSX = allMonthsWithDaysArr.map(
-        (monthWithDays, monthlyIndexInt) => {
-          if (monthStart === monthlyIndexInt && monthStart === monthFinish) {
-            return monthWithDays.map((day, index) => {
-              if (day >= dayStart + 1 && day <= dayFinish + 1) {
-                return (
-                  <span key={index} className="calender__each-day--bookedDay">
-                    {day}
-                  </span>
-                );
-              }
-
-              return (
-                <span key={index} className="calender__each-day">
-                  {day}
+    let i = 0;
+    const calenderArr = fullYearArr.map((eachMonth, monthIndex) => {
+      return eachMonth.map((eachDay, index) => {
+        let EachDayJSX;
+        console.log(i);
+        console.log(holidayDataArr.length -1);
+        if (i <= holidayDataArr.length -1) {
+          if (holidayDataArr[i][1] === monthIndex + 1) {
+            if (eachDay === holidayDataArr[i][0]) {
+              i++;
+              console.log(`index of ${i}`);
+              EachDayJSX = (
+                <span key={index} className="calender__each-day--bookedDay">
+                  {eachDay}
                 </span>
               );
-            });
-          } else if (monthStart !== monthFinish) {
-            if (monthStart === monthlyIndexInt) {
-              return monthWithDays.map((day, index) => {
-                if (day >= dayStart + 1) {
-                  return (
-                    <span key={index} className="calender__each-day--bookedDay">
-                      {day}
-                    </span>
-                  );
-                } else {
-                  return (
-                    <span key={index} className="calender__each-day">
-                      {day}
-                    </span>
-                  );
-                }
-              });
+
+              return EachDayJSX;
+            } else {
+              EachDayJSX = (
+                <span key={index} className="calender__each-day">
+                  {eachDay}
+                </span>
+              );
+              return EachDayJSX;
             }
-            if (monthFinish === monthlyIndexInt) {
-              return monthWithDays.map((day, index) => {
-                if (day <= dayFinish + 1) {
-                  return (
-                    <span key={index} className="calender__each-day--bookedDay">
-                      {day}
-                    </span>
-                  );
-                } else {
-                  return (
-                    <span key={index} className="calender__each-day">
-                      {day}
-                    </span>
-                  );
-                }
-              });
-            }
-          }
-          return monthWithDays.map((day, index) => {
-            return (
+          } else {
+            EachDayJSX = (
               <span key={index} className="calender__each-day">
-                {day}
+                {eachDay}
               </span>
             );
-          });
+            return EachDayJSX;
+          }
+        } else {
+          EachDayJSX = (
+            <span key={index} className="calender__each-day">
+              {eachDay}
+            </span>
+          );
+          return EachDayJSX;
         }
-      );
-      setTestChange(EachDayJSX);
+      });
     });
+    setDaysForEachMonth(calenderArr);
   };
 
-
   const handleMonthArrJSX = () => {
-    createCalender()
-    console.log(counter);
     const monthJSX = months.map((eachMonth, index) => {
-          return (<p key={index}>{eachMonth}</p>);
-    })
-    setCalenderYear(monthJSX)
-  }
-  useEffect(() => {
-    handleMonthArrJSX()
-  }, [holidayData]);
+      return <p key={index}>{eachMonth}</p>;
+    });
+    setMonthlyTitles(monthJSX);
+  };
 
+  useEffect(() => {
+    createCalender();
+    handleMonthArrJSX();
+  }, [dataLoaded]);
 
   return (
     <div className="calender">
-      <h2 className="calender__year">{calenderYear[counter]}</h2>
-      {eachMonthsDays && (
+      <h2 className="calender__year">{calenderYear}</h2>
+      {monthlyTitles && (
+        <span className="calender__month">{monthlyTitles[counter]}</span>
+      )}
+      {daysForEachMonth && (
         <Carousel
-        counter={counter}
-        setCounter={setCounter}
+          counter={counter}
+          setCounter={setCounter}
           startPosition={currentDate.getMonth()}
           title={calenderYear}
           titleToSet={setCalenderYear}
-          givenArr={eachMonthsDays}
+          givenArr={daysForEachMonth}
         />
       )}
     </div>
