@@ -2,7 +2,12 @@ import React, { useState, useEffect } from 'react';
 import './BookingForm.scss';
 import Button from '../Button/Button';
 
-const BookingForm = ({ daysForEachMonth, months, dataLoaded, setDataLoaded }) => {
+const BookingForm = ({
+  daysForEachMonth,
+  months,
+  dataLoaded,
+  setDataLoaded,
+}) => {
   const currentDate = new Date();
   const [selectedMonth, setSelectedMonth] = useState(1);
   const [yearsArr, setYearsArr] = useState([]);
@@ -31,9 +36,7 @@ const BookingForm = ({ daysForEachMonth, months, dataLoaded, setDataLoaded }) =>
     const monthFinish =
       months.indexOf(event.target.children[1].children[3].value) + 1;
     event.preventDefault();
-
-
-    const bodyForPostReq =  JSON.stringify({
+    const bodyForPostReq = JSON.stringify({
       dayStart: parseInt(event.target.children[0].children[4].value),
       monthStart: monthStart,
       yearStart: parseInt(event.target.children[0].children[5].value),
@@ -53,11 +56,10 @@ const BookingForm = ({ daysForEachMonth, months, dataLoaded, setDataLoaded }) =>
       headers: headersList,
     });
     let data = await response.text();
-
-    alert(data)
+    alert(data);
+    setDataLoaded(false)
   };
 
-  //   console.log(daysForEachMonth[selectedMonth - 1]);
   return (
     <form className="form" onSubmit={handleFormSubmit}>
       <div className="form__dropdown-containers">
@@ -78,16 +80,20 @@ const BookingForm = ({ daysForEachMonth, months, dataLoaded, setDataLoaded }) =>
         <select className="form__options--date">
           {daysForEachMonth &&
             daysForEachMonth[selectedMonth - 1].map((eachDay, index) => {
-                if(eachDay === currentDate.getDate()){
-                    return <option selected="selected" key={index}>{eachDay}</option>
-                } else {
-                    return <option key={index}>{eachDay}</option>;
-                }
+              if (eachDay === currentDate.getDate()) {
+                return (
+                  <option selected="selected" key={index}>
+                    {eachDay}
+                  </option>
+                );
+              } else {
+                return <option key={index}>{eachDay}</option>;
+              }
             })}
         </select>
         <select className="form__options--date" name="" id="">
           {yearsArr.map((eachYear, index) => {
-            return <option key={index}>{eachYear}</option>
+            return <option key={index}>{eachYear}</option>;
           })}
         </select>
       </div>
@@ -109,16 +115,20 @@ const BookingForm = ({ daysForEachMonth, months, dataLoaded, setDataLoaded }) =>
         <select className="form__options--date" id="">
           {daysForEachMonth &&
             daysForEachMonth[selectedMonth - 1].map((eachDay, index) => {
-                if(eachDay === currentDate.getDate()){
-                    return <option selected key={index}>{eachDay}</option>
-                } else {
-                    return <option key={index}>{eachDay}</option>;
-                }
+              if (eachDay === currentDate.getDate()) {
+                return (
+                  <option selected key={index}>
+                    {eachDay}
+                  </option>
+                );
+              } else {
+                return <option key={index}>{eachDay}</option>;
+              }
             })}
         </select>
         <select className="form__options--date" name="" id="">
           {yearsArr.map((eachYear, index) => {
-            return <option key={index}>{eachYear}</option>
+            return <option key={index}>{eachYear}</option>;
           })}
         </select>
       </div>

@@ -54,6 +54,7 @@ const Calender = ({
           holidayData.forEach((holiday) => {
             if (clickedMonthInt === holiday.monthStart) {
               if (clickedDay >= holiday.dayStart) {
+                console.log(holiday);
                 setClickedHolidayInfo(holiday);
                 setOverlayActive((overlayActive) => !overlayActive);
               }
@@ -62,6 +63,7 @@ const Calender = ({
               if (clickedDay <= holiday.dayFinish) {
                 setOverlayActive((overlayActive) => !overlayActive);
                 setClickedHolidayInfo(holiday);
+                console.log("getting here");
               }
             }
           }
@@ -145,6 +147,7 @@ const Calender = ({
     handleMonthArrJSX();
   }, [dataLoaded]);
 
+  
   return (
     <div className="calender">
       <h2 className="calender__year">{calenderYear}</h2>

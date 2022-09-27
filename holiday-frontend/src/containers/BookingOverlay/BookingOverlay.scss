@@ -1,3 +1,5 @@
+@use "../../assets/Scss/variables" as *;
+
 .booking-overlay{
     position: absolute;
     top: 13rem;
@@ -10,5 +12,17 @@
     
     &--hidden{
         display: none;
+    }
+    &__close {
+        width: 2rem;
+        height: 2rem;
+        position: relative;
+        left: 14rem;
+        background-color: $color-darkRed;
+        border-radius: 2rem;
+        text-align: center;
+        padding-top: .3rem;
+        font-weight: 700;
+        border: none;
     }
 }
